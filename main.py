@@ -4,14 +4,19 @@ import re
 import discord
 import os
 import json
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key, find_dotenv
+
 from PIL import Image
 
 from discord.ext import commands
 
-load_dotenv()
+
+dotenv_file = find_dotenv()
+load_dotenv(dotenv_file)
 TOKEN = os.getenv('DISCORD_TOKEN')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+
+
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 if not os.path.isdir("reference_images"):
@@ -34,8 +39,9 @@ async def on_member_join(member):
 
 
 @bot.command(name='change.prefix')
-async def newprefix(ctx, new_prefix): #Tells the message author that they are loved
+async def newprefix(ctx, new_prefix): #Changes the command prefix
     COMMAND_PREFIX = new_prefix
+    set_key(dotenv_file, "COMMAND_PREFIX", new_prefix)
     
 
 
