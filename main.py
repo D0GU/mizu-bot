@@ -71,8 +71,8 @@ async def build_message_list(ctx):
     
     await ctx.send(f"<@{str(ctx.message.author.id)}>, Message Database Built!")
         
-@bot.command(name="wordusage")
-async def wordusage(ctx, word: str):
+@bot.command(name="wordusage") 
+async def wordusage(ctx, word: str): # Checks how many times a word is used within the user's guild.
     count = 0
     guild = ctx.message.guild
     print(f"current guild id is: {guild.id}")
