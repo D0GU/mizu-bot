@@ -39,8 +39,8 @@ async def on_member_join(member):
 
 
 
-@bot.command(name='help')
-async def help():
+@bot.command(name='commands')
+async def command_help(ctx):
     embed=discord.Embed(title="Command list", description="Available commands", color=0xfce94f)
     embed.add_field(name="miz!mbuild", value="Rebuild the message database for the current server", inline=True)
     embed.add_field(name="miz!wordusage [word]", value="Reports how many times a word has been used in the current server", inline=True)
