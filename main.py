@@ -1,6 +1,7 @@
 from email import message
 from enum import auto
 from tokenize import String
+from unicodedata import name
 import discord
 import os
 import json
@@ -11,8 +12,8 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-
-bot = commands.Bot(command_prefix=">")
+commandprefix = ">"
+bot = commands.Bot(command_prefix=commandprefix)
 
 
 
@@ -69,6 +70,25 @@ async def build_message_list(ctx):
             json_data.write(json.dumps(message_history))
     
     await ctx.send(f"<@{str(ctx.message.author.id)}>, Message Database Built!")
-            
+        
+@bot.command(name="wordusage")
+async def wordusage(ctx, word: str):
+    count = 0
+    guild = ctx.message.guild
+    print(f"current guild id is: {guild.id}")
+    try:
+        with open(f"{str(guild.id)}_msg_history.json", "r") as json_file:
+            message_history = json.load(json_file)
+    except:
+        await ctx.send(
+            "Could not find message database\n"
+            f"Please type '{commandprefix}mbuild' to build message database"
+        )
+        return
+    for msg in message_history:
+        if word in message_history[msg]['content']:
+            print(message_history[msg]["content"])
+            count += 1
+    await ctx.send(f"The word {word} has been used {count} times on this server") 
 
 bot.run(TOKEN)
