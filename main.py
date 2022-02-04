@@ -15,6 +15,9 @@ bot = commands.Bot(command_prefix=commandprefix)
 
 if not os.path.isdir("reference_images"):
     os.mkdir("reference_images")
+    print("reference_images directory created!")
+else:
+    print("reference_images directory exists!")
 
 @bot.event
 async def on_ready():
@@ -82,7 +85,7 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
             "Could not find message database\n"
             f"Please type '{commandprefix}mbuild' to build message database"
         )
-        return
+        
     for msg in message_history:
         if word.lower() in message_history[msg]['content'].lower():
             print(message_history[msg]["content"])
