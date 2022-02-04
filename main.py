@@ -97,7 +97,7 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
     except:
         await ctx.send(
             "Could not find message database\n"
-            f"Please type '{commandprefix}mbuild' to build message database"
+            f"Please type '{COMMAND_PREFIX}mbuild' to build message database"
         )
         
     for msg in message_history:
