@@ -1,11 +1,9 @@
-from email import message
-from enum import auto
-from tokenize import String
-from unicodedata import name
+
 import discord
 import os
 import json
 from dotenv import load_dotenv
+from PIL import Image
 
 from discord.ext import commands
 
@@ -92,14 +90,14 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
     await ctx.send(f"The word {word} has been used {count} times on this server")
 
 
-@bot.command(name = "create_entry")
+@bot.command(name = "create")
 async def create_entry(ctx, name):
+    references = {}
     try:
         with open("references.json", "r") as json_data:
-            references =  json_data.load(json_data)
+                references = json.load(json_data)
     except:
-        await ctx.send("Could not open references")
-        return
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
 
     if name in references:
         await ctx.send("Name already in references")
@@ -109,9 +107,73 @@ async def create_entry(ctx, name):
             "height": 0,
             "description": ""
         }
-        with open("references,json", "r") as fileout:
+        with open("references.json", "w") as fileout:
             fileout.write(json.dumps(references))
         await ctx.send(f"Reference for character {name} has been created")
 
+
+@bot.command(name = "update")
+async def create_entry(ctx, name, parameter: str, content):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+    
+    if parameter == "age":
+        references[name]["age"] = content
+    elif parameter == "height":
+        references[name]["height"] = content
+    elif parameter == "description":
+        references[name]["description"] = content
+
+    with open("references.json", "w") as json_data:
+        json_data.write(json.dumps(references))
+
+    await ctx.send(f"{name}'s {parameter} has been updated")
+
+@bot.command(name = "update.image")
+async def create_entry(ctx, name):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    if name in references:
+        for attach in ctx.message.attachments:
+            await attach.save(f"reference_images/{attach.filename}")
+            im = Image.open(f"reference_images/{attach.filename}")
+            im.save(f"reference_images/{name}.png") 
+            os.remove(f"reference_images/{attach.filename}")
+            
+    await ctx.send(f"{name}'s reference image updated")
+
+
+@bot.command(name = "reference")
+async def reference(ctx, name):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    age = (str(references[name]['age']))
+    height = (str(references[name]['height']))
+    desc = references[name]['description']
+
+    if name in references:
+        file = discord.File(f"reference_images/{name}.png")
+        embed = discord.Embed(title=name, description="Character Reference", color=0x73d216)
+        embed.add_field(name="Age", value=age, inline=True)
+        embed.add_field(name="Height", value=(height+"cm"), inline=True)
+        embed.add_field(name="Description", value=desc, inline=False)
+        embed.set_image(url=f"attachment://reference_images/{name}.png")
+        await ctx.send(file=file, embed=embed)
+    else:
+        await ctx.send("Character not in references")
 
 bot.run(TOKEN)
