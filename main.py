@@ -44,6 +44,7 @@ async def newprefix(ctx, new_prefix): #Changes the command prefix
     load_dotenv()
     TOKEN = os.getenv('DISCORD_TOKEN')
     COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+    bot = commands.Bot(command_prefix=COMMAND_PREFIX)
     
 
 
