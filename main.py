@@ -40,8 +40,10 @@ async def on_member_join(member):
 
 @bot.command(name='change.prefix')
 async def newprefix(ctx, new_prefix): #Changes the command prefix
-    COMMAND_PREFIX = new_prefix
     set_key(dotenv_file, "COMMAND_PREFIX", new_prefix)
+    load_dotenv()
+    TOKEN = os.getenv('DISCORD_TOKEN')
+    COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
     
 
 
