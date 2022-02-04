@@ -1,13 +1,9 @@
 
-from hashlib import new
-import re
 import discord
 import os
 import json
 from dotenv import load_dotenv, set_key, find_dotenv
-
 from PIL import Image
-
 from discord.ext import commands
 
 
@@ -54,11 +50,7 @@ async def command_help(ctx):
 @bot.command(name='change.prefix')
 async def newprefix(ctx, new_prefix): #Changes the command prefix
     set_key(dotenv_file, "COMMAND_PREFIX", new_prefix)
-    load_dotenv()
-    TOKEN = os.getenv('DISCORD_TOKEN')
-    COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
-    bot = commands.Bot(command_prefix=COMMAND_PREFIX)
-    
+    await ctx.send("New prefix set!\n Changes will be seen on next bot restart.")
 
 
 @bot.command(name='ily')
