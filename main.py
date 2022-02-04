@@ -68,7 +68,7 @@ async def build_message_list(ctx):
     with open(f"{str(guild.id)}_msg_history.json", "w") as json_data:
             json_data.write(json.dumps(message_history))
     
-    await ctx.send(f"@{str(ctx.message.author)}, Message Database Built!")
+    await ctx.send(f"<@{str(ctx.message.author.id)}>, Message Database Built!")
             
 
 bot.run(TOKEN)
