@@ -95,8 +95,8 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
 @bot.command(name = "create_entry")
 async def create_entry(ctx, name):
     try:
-     with open("references.json", "r") as json_data:
-        references =  json_data.load(json_data)
+        with open("references.json", "r") as json_data:
+            references =  json_data.load(json_data)
     except:
         await ctx.send("Could not open references")
         return
