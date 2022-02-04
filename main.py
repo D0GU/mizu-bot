@@ -38,6 +38,19 @@ async def on_member_join(member):
     )
 
 
+
+@bot.command(name='help')
+async def help():
+    embed=discord.Embed(title="Command list", description="Available commands", color=0xfce94f)
+    embed.add_field(name="miz!mbuild", value="Rebuild the message database for the current server", inline=True)
+    embed.add_field(name="miz!wordusage [word]", value="Reports how many times a word has been used in the current server", inline=True)
+    embed.add_field(name="miz!create [Character Name]", value="Creates a new reference for the given name", inline=True)
+    embed.add_field(name="miz!update [Character name] [parameter] [value]", value="Updates a specific reference value for the given character. Available parameters are: age, height, description", inline=True)
+    embed.add_field(name="miz!update.image [Character Name]", value="Updates the given character reference with an embedded image", inline=True)
+    embed.add_field(name="miz!reference [Character name]", value="Displays the refrence entry for the given name", inline=True)
+    embed.add_field(name="miz!prefix.change [new prefix]", value="Changes the bot prefix", inline=True)
+    await ctx.send(embed=embed)
+
 @bot.command(name='change.prefix')
 async def newprefix(ctx, new_prefix): #Changes the command prefix
     set_key(dotenv_file, "COMMAND_PREFIX", new_prefix)
