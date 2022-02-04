@@ -13,8 +13,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 commandprefix = ">"
 bot = commands.Bot(command_prefix=commandprefix)
 
-
-
+if not os.path.isdir("reference_images"):
+    os.mkdir("reference_images")
 
 @bot.event
 async def on_ready():
