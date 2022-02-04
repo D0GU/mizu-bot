@@ -1,4 +1,6 @@
 
+from hashlib import new
+import re
 import discord
 import os
 import json
@@ -9,9 +11,8 @@ from discord.ext import commands
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-
-commandprefix = ">"
-bot = commands.Bot(command_prefix=commandprefix)
+COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 if not os.path.isdir("reference_images"):
     os.mkdir("reference_images")
@@ -30,6 +31,13 @@ async def on_member_join(member):
     await member.dm_channel.send(
         f'Hello {member.name}~, thanks for coming around cutie~'
     )
+
+
+@bot.command(name='change.prefix')
+async def newprefix(ctx, new_prefix): #Tells the message author that they are loved
+    COMMAND_PREFIX = new_prefix
+    
+
 
 @bot.command(name='ily')
 async def i_love_you(ctx): #Tells the message author that they are loved
