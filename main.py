@@ -89,6 +89,29 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
         if word.lower() in message_history[msg]['content'].lower():
             print(message_history[msg]["content"])
             count += 1
-    await ctx.send(f"The word {word} has been used {count} times on this server") 
+    await ctx.send(f"The word {word} has been used {count} times on this server")
+
+
+@bot.command(name = "create_entry")
+async def create_entry(ctx, name):
+    try:
+     with open("references.json", "r") as json_data:
+        references =  json_data.load(json_data)
+    except:
+        await ctx.send("Could not open references")
+        return
+
+    if name in references:
+        await ctx.send("Name already in references")
+    else:
+        references[name] = {
+            "age": 0,
+            "height": 0,
+            "description": ""
+        }
+        with open("references,json", "r") as fileout:
+            fileout.write(json.dumps(references))
+        await ctx.send(f"Reference for character {name} has been created")
+
 
 bot.run(TOKEN)
