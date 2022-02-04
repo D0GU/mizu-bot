@@ -34,9 +34,9 @@ async def on_member_join(member):
 async def i_love_you(ctx): #Tells the message author that they are loved
 
     # Takes the username minus id number of the message author
-    author = str(ctx.message.author).split("#")[0] 
+    author = str(ctx.message.author.display_name).split("#")[0] 
     
-    response = f"Mmm~ I love you too {author}~"
+    response = f"Mmm~ I love you too {author}"
     await ctx.send(response)
 
 @bot.command(name = 'mbuild')
@@ -86,7 +86,7 @@ async def wordusage(ctx, word: str):
         )
         return
     for msg in message_history:
-        if word in message_history[msg]['content']:
+        if word.lower() in message_history[msg]['content'].lower():
             print(message_history[msg]["content"])
             count += 1
     await ctx.send(f"The word {word} has been used {count} times on this server") 
