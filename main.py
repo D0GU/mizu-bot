@@ -221,9 +221,8 @@ async def create_entry(ctx, name, index):
             await ctx.send(file=file)
     else:
         file = discord.File(references[name]["images"][int(index)-1])
-        await ctx.send(file=file)
-        await ctx.message.delete()
-
+        msg = await ctx.send(file=file)
+        await msg.delete()
     
 
 @bot.command(name = "reference")
