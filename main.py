@@ -56,6 +56,7 @@ async def command_help(ctx):
 async def newprefix(ctx, new_prefix): #Changes the command prefix
     set_key(dotenv_file, "COMMAND_PREFIX", new_prefix)
     await ctx.send("New prefix set!\n Changes will be seen on next bot restart.")
+    os.excel("restart.sh","")
 
 
 @bot.command(name='ily')
