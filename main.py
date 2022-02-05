@@ -195,7 +195,7 @@ async def create_entry(ctx, name):
         for attach in ctx.message.attachments:
             await attach.save(f"images/{attach.filename}")
             im = Image.open(f"images/{attach.filename}")
-            im.save(f"images/{name}{str(references[name]['images'].len()+1)}.png")
+            im.save(f"images/{name}{str(len(references[name]['images'])+1)}.png")
             references[name]['images'].append(f"images/{name}{str(len(references[name]['images'])+1)}.png") 
             os.remove(f"reference_images/{attach.filename}")
 
