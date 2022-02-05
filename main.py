@@ -15,11 +15,18 @@ COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
+
 if not os.path.isdir("reference_images"):
     os.mkdir("reference_images")
     print("reference_images directory created!")
 else:
     print("reference_images directory exists!")
+
+if not os.path.isdir("images"):
+    os.mkdir("images")
+    print("images directory created!")
+else:
+    print("images directory exists!")
 
 @bot.event
 async def on_ready():
@@ -32,8 +39,6 @@ async def on_member_join(member):
     await member.dm_channel.send(
         f'Hello {member.name}~, thanks for coming around cutie~'
     )
-
-
 
 @bot.command(name='commands')
 async def command_help(ctx):
@@ -130,7 +135,8 @@ async def create_entry(ctx, name):
         references[name] = {
             "age": 0,
             "height": 0,
-            "description": ""
+            "description": "",
+            "images": []
         }
         with open("references.json", "w") as fileout:
             fileout.write(json.dumps(references))
@@ -176,6 +182,47 @@ async def create_entry(ctx, name):
             
     await ctx.send(f"{name}'s reference image updated")
 
+@bot.command(name = "image.add")
+async def create_entry(ctx, name):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    if name in references:
+        for attach in ctx.message.attachments:
+            await attach.save(f"images/{attach.filename}")
+            im = Image.open(f"images/{attach.filename}")
+            im.save(f"images/{name}{str(references[name]['images'].len()+1)}.png")
+            references[name]['images'].append(f"images/{name}{str(references[name]['images'].len()+1)}.png") 
+            os.remove(f"reference_images/{attach.filename}")
+
+    with open("references.json", "w") as json_data:
+        json_data.write(json.dumps(references))
+
+    await ctx.send(f"{name} image added!")
+
+
+@bot.command(name = "image.get")
+async def create_entry(ctx, name, index):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    if index == "all":
+        for entry in references[name]["images"]:
+            file = discord.File(entry)
+            await ctx.send(file=file)
+    else:
+        file = discord.File(references[name]["images"][int(index)-1])
+        await ctx.send(file=file)
+
+    
 
 @bot.command(name = "reference")
 async def reference(ctx, name):
