@@ -197,7 +197,7 @@ async def create_entry(ctx, name):
             im = Image.open(f"images/{attach.filename}")
             im.save(f"images/{name}{str(len(references[name]['images'])+1)}.png")
             references[name]['images'].append(f"images/{name}{str(len(references[name]['images'])+1)}.png") 
-            os.remove(f"reference_images/{attach.filename}")
+            os.remove(f"images/{attach.filename}")
 
     with open("references.json", "w") as json_data:
         json_data.write(json.dumps(references))
