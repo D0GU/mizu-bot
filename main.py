@@ -247,13 +247,14 @@ async def reference(ctx, name):
     age = (str(references[name]['age']))
     height = (str(references[name]['height']))
     desc = references[name]['description']
+    image = references[name]['referenceimage']
 
     if name in references:
         embed = discord.Embed(title=name, description="Character Reference", color=0x73d216)
         embed.add_field(name="Age", value=age, inline=True)
         embed.add_field(name="Height", value=(height+"cm"), inline=True)
         embed.add_field(name="Description", value=desc, inline=False)
-        embed.set_image(references[name]['referenceimage'])
+        embed.set_image(image)
         await ctx.send(embed=embed)
     else:
         await ctx.send("Character not in references")
