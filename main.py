@@ -173,6 +173,27 @@ async def update_reference(ctx, name, parameter: str, content):
     await ctx.send(f"{name}'s {parameter} has been updated")
 
 
+@bot.command(name = "update.reference.all")
+async def update_reference_all(ctx, name, age, height, desc):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    references[name]["age"] = age
+    references[name]["height"] = height
+    references[name]["description"] = desc
+
+    with open("references.json", "w") as json_data:
+        json_data.write(json.dumps(references))
+
+    await ctx.send(f"{name}'s everything has been updated")
+
+
+
+
 @bot.command(name = "update.reference.image")
 async def update_reference_image(ctx, name):
     references = {}
@@ -309,6 +330,29 @@ async def update_entry(ctx, entry, parameter: str, content):
         encyclopedia[entry]["maturity"] = content
     elif parameter == "lore":
         encyclopedia[entry]["lore"] = content
+
+
+    with open("encyclopedia.json", "w") as json_data:
+        json_data.write(json.dumps(encyclopedia))
+
+    await ctx.send(f"{entry}'s {parameter} has been updated")
+
+
+@bot.command(name = "update.entry.all")
+async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, maturity, lore, content):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+    
+        encyclopedia[entry]["monsterid"] = monsterid
+        encyclopedia[entry]["species"] = species
+        encyclopedia[entry]["threatlevel"] = threatlevel
+        encyclopedia[entry]["height"] = height
+        encyclopedia[entry]["maturity"] = maturity
+        encyclopedia[entry]["lore"] = lore
 
 
     with open("encyclopedia.json", "w") as json_data:
