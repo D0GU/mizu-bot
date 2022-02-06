@@ -329,6 +329,9 @@ async def update_entry_image(ctx, entry):
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
             encyclopedia[entry]['referenceimage'] = str(attach.url)
+    
+    with open("encyclopedia.json", "w") as json_data:
+        json_data.write(json.dumps(encyclopedia))
             
     await ctx.send(f"{entry}'s reference image updated")
 
