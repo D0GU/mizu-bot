@@ -1,4 +1,5 @@
 
+from ast import Str
 import discord
 import os
 import json
@@ -150,6 +151,7 @@ async def create_reference(ctx, name):
             "age": "",
             "height": "",
             "description": "",
+            "referenceimage": "",
             "images": []
         }
         with open("references.json", "w") as fileout:
@@ -190,10 +192,7 @@ async def update_reference_image(ctx, name):
 
     if name in references:
         for attach in ctx.message.attachments:
-            await attach.save(f"reference_images/{attach.filename}")
-            im = Image.open(f"reference_images/{attach.filename}")
-            im.save(f"reference_images/{name}.png") 
-            os.remove(f"reference_images/{attach.filename}")
+            references[name]['referenceimage'] = (str(attach.url))
             
     await ctx.send(f"{name}'s reference image updated")
 
@@ -209,11 +208,8 @@ async def image_add(ctx, name):
 
     if name in references:
         for attach in ctx.message.attachments:
-            await attach.save(f"images/{attach.filename}")
-            im = Image.open(f"images/{attach.filename}")
-            im.save(f"images/{name}{str(len(references[name]['images'])+1)}.png")
-            references[name]['images'].append(f"images/{name}{str(len(references[name]['images'])+1)}.png") 
-            os.remove(f"images/{attach.filename}")
+            references[name]['images'].append(str(attach.url)+str(len(references[name]['images']+1)))
+            
 
     with open("references.json", "w") as json_data:
         json_data.write(json.dumps(references))
@@ -232,11 +228,10 @@ async def image_get(ctx, name, index):
 
     if index == "all":
         for entry in references[name]["images"]:
-            file = discord.File(entry)
-            await ctx.send(file=file)
+            await ctx.send(entry)
     else:
-        file = discord.File(references[name]["images"][int(index)-1])
-        msg = await ctx.send(file=file)
+        image = references[name]["images"][int(index)-1]
+        msg = await ctx.send(image)
         await msg.delete()
     
 
@@ -254,13 +249,12 @@ async def reference(ctx, name):
     desc = references[name]['description']
 
     if name in references:
-        file = discord.File(f"reference_images/{name}.png")
         embed = discord.Embed(title=name, description="Character Reference", color=0x73d216)
         embed.add_field(name="Age", value=age, inline=True)
         embed.add_field(name="Height", value=(height+"cm"), inline=True)
         embed.add_field(name="Description", value=desc, inline=False)
-        embed.set_image(url=f"attachment://reference_images/{name}.png")
-        await ctx.send(file=file, embed=embed)
+        embed.set_image(references[name]['referenceimage'])
+        await ctx.send(embed=embed)
     else:
         await ctx.send("Character not in references")
 
@@ -290,6 +284,7 @@ async def create_entry(ctx, entry):
             "height": "",
             "maturity": "",
             "lore": "",
+            "referenceimage": "",
             "images": []
         }
         with open("encyclopedia.json", "w") as fileout:
@@ -337,10 +332,7 @@ async def update_entry_image(ctx, entry):
 
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
-            await attach.save(f"encyclopedia_images/{attach.filename}")
-            im = Image.open(f"encyclopedia_images/{attach.filename}")
-            im.save(f"encyclopedia_images/{entry}.png") 
-            os.remove(f"encyclopedia_images/{attach.filename}")
+            encyclopedia[entry]['images'].append(str(attach.url)+str(len(encyclopedia[entry]['images']+1)))
             
     await ctx.send(f"{entry}'s reference image updated")
 
@@ -356,11 +348,7 @@ async def entry_image_add(ctx, entry):
 
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
-            await attach.save(f"encyclopedia_images/{attach.filename}")
-            im = Image.open(f"encyclopedia_images/{attach.filename}")
-            im.save(f"encyclopedia_images/{entry}{str(len(encyclopedia[entry]['images'])+1)}.png")
-            encyclopedia[entry]['images'].append(f"encyclopedia_images/{entry}{str(len(encyclopedia[entry]['images'])+1)}.png") 
-            os.remove(f"encyclopedia_images/{attach.filename}")
+            [encyclopedia][entry]["referenceimage"] = str(attach.url)
 
     with open("encyclopedia.json", "w") as json_data:
         json_data.write(json.dumps(encyclopedia))
@@ -379,11 +367,10 @@ async def entry_image_get(ctx, entry, index):
 
     if index == "all":
         for image in encyclopedia[entry]["images"]:
-            file = discord.File(image)
-            await ctx.send(file=file)
+            await ctx.send(image)
     else:
-        file = discord.File(encyclopedia[entry]["images"][int(index)-1])
-        msg = await ctx.send(file=file)
+        image = encyclopedia[entry]["images"][int(index)-1]
+        msg = await ctx.send(image)
         await msg.delete()
     
 
@@ -403,15 +390,14 @@ async def entry(ctx, entry):
     lore = encyclopedia[entry]['lore']
 
     if entry in encyclopedia:
-        file = discord.File(f"encyclopedia_images/{entry}.png")
         embed = discord.Embed(title=entry, description="Monster ID", color=0x73d216)
         embed.add_field(name="Species", value=species, inline=True)
         embed.add_field(name="Threat Level", value=threatlevel, inline=False)
         embed.add_field(name="Height", value=(height + "cm"), inline=False)
         embed.add_field(name="Maturity", value=maturity, inline=False)
         embed.add_field(name="Lore", value=lore, inline=False)
-        embed.set_image(url=f"attachment://encyclopedia_images/{entry}.png")
-        await ctx.send(file=file, embed=embed)
+        embed.set_image(encyclopedia[entry]['referenceimage'])
+        await ctx.send(embed=embed)
     else:
         await ctx.send("Entry not in Encyclopedia")
 
