@@ -257,7 +257,7 @@ async def reference(ctx, name):
         embed.add_field(name="Age", value=age, inline=True)
         embed.add_field(name="Height", value=(height+"cm"), inline=True)
         embed.add_field(name="Description", value=desc, inline=False)
-        embed.set_image(image)
+        embed.set_image(url=image)
         await ctx.send(embed=embed)
     else:
         await ctx.send("Character not in references")
@@ -400,7 +400,7 @@ async def entry(ctx, entry):
         embed.add_field(name="Height", value=(height + "cm"), inline=False)
         embed.add_field(name="Maturity", value=maturity, inline=False)
         embed.add_field(name="Lore", value=lore, inline=False)
-        embed.set_image(encyclopedia[entry]['referenceimage'])
+        embed.set_image(url=encyclopedia[entry]['referenceimage'])
         await ctx.send(embed=embed)
     else:
         await ctx.send("Entry not in Encyclopedia")
