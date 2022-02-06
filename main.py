@@ -203,7 +203,7 @@ async def image_add(ctx, name):
 
     if name in references:
         for attach in ctx.message.attachments:
-            references[name]['images'].append(str(attach.url)+str(len(references[name]['images']+1)))
+            references[name]['images'].append(str(attach.url))
             
 
     with open("references.json", "w") as json_data:
@@ -328,7 +328,7 @@ async def update_entry_image(ctx, entry):
 
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
-            encyclopedia[entry]['images'].append(str(attach.url)+str(len(encyclopedia[entry]['images']+1)))
+            encyclopedia[entry]['referenceimage'] = str(attach.url)
             
     await ctx.send(f"{entry}'s reference image updated")
 
@@ -344,7 +344,7 @@ async def entry_image_add(ctx, entry):
 
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
-            [encyclopedia][entry]["referenceimage"] = str(attach.url)
+            [encyclopedia][entry]["image"].append(str(attach.url))
 
     with open("encyclopedia.json", "w") as json_data:
         json_data.write(json.dumps(encyclopedia))
