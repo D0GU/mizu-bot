@@ -28,6 +28,12 @@ if not os.path.isdir("images"):
 else:
     print("images directory exists!")
 
+if not os.path.isdir("encyclopedia_images"):
+    os.mkdir("encyclopedia_images")
+    print("encyclopedia_images directory created!")
+else:
+    print("encyclopedia_images directory exists!")
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
@@ -121,8 +127,14 @@ async def wordusage(ctx, word: str): # Checks how many times a word is used with
     await ctx.send(f"The word {word} has been used {count} times on this server")
 
 
-@bot.command(name = "create")
-async def create_entry(ctx, name):
+
+#----------------------#
+# Character References #
+# ---------------------#
+
+
+@bot.command(name = "create.reference")
+async def create_reference(ctx, name):
     references = {}
     try:
         with open("references.json", "r") as json_data:
@@ -134,8 +146,9 @@ async def create_entry(ctx, name):
         await ctx.send("Name already in references")
     else:
         references[name] = {
-            "age": 0,
-            "height": 0,
+            "species": "",
+            "age": "",
+            "height": "",
             "description": "",
             "images": []
         }
@@ -144,8 +157,8 @@ async def create_entry(ctx, name):
         await ctx.send(f"Reference for character {name} has been created")
 
 
-@bot.command(name = "update")
-async def create_entry(ctx, name, parameter: str, content):
+@bot.command(name = "update.reference")
+async def update_reference(ctx, name, parameter: str, content):
     references = {}
     try:
         with open("references.json", "r") as json_data:
@@ -165,8 +178,9 @@ async def create_entry(ctx, name, parameter: str, content):
 
     await ctx.send(f"{name}'s {parameter} has been updated")
 
-@bot.command(name = "update.image")
-async def create_entry(ctx, name):
+
+@bot.command(name = "update.reference.image")
+async def update_reference_image(ctx, name):
     references = {}
     try:
         with open("references.json", "r") as json_data:
@@ -183,8 +197,9 @@ async def create_entry(ctx, name):
             
     await ctx.send(f"{name}'s reference image updated")
 
+
 @bot.command(name = "image.add")
-async def create_entry(ctx, name):
+async def image_add(ctx, name):
     references = {}
     try:
         with open("references.json", "r") as json_data:
@@ -207,7 +222,7 @@ async def create_entry(ctx, name):
 
 
 @bot.command(name = "image.get")
-async def create_entry(ctx, name, index):
+async def image_get(ctx, name, index):
     references = {}
     try:
         with open("references.json", "r") as json_data:
@@ -248,5 +263,160 @@ async def reference(ctx, name):
         await ctx.send(file=file, embed=embed)
     else:
         await ctx.send("Character not in references")
+
+
+
+#----------------------#
+# Monster Encyclopedia #
+# ---------------------#
+
+
+@bot.command(name = "create.entry")
+async def create_entry(ctx, entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    if entry in encyclopedia:
+        await ctx.send("Entry already in encyclopedia")
+    else:
+        encyclopedia[entry] = {
+            "monsterid": "",
+            "species": "",
+            "threatlevel": "",
+            "height": "",
+            "maturity": "",
+            "lore": "",
+            "images": []
+        }
+        with open("encyclopedia.json", "w") as fileout:
+            fileout.write(json.dumps(encyclopedia))
+        await ctx.send(f"Entry for {entry} has been created")
+
+
+@bot.command(name = "update.entry")
+async def update_entry(ctx, entry, parameter: str, content):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+    
+    if parameter == "monsterid":
+        encyclopedia[entry]["monsterid"] = content
+    elif parameter == "species":
+        encyclopedia[entry]["species"] = content
+    elif parameter == "threatlevel":
+        encyclopedia[entry]["threatlevel"] = content
+    elif parameter == "height":
+        encyclopedia[entry]["height"] = content
+    elif parameter == "maturity":
+        encyclopedia[entry]["maturity"] = content
+    elif parameter == "lore":
+        encyclopedia[entry]["lore"] = content
+
+
+    with open("encyclopedia.json", "w") as json_data:
+        json_data.write(json.dumps(encyclopedia))
+
+    await ctx.send(f"{entry}'s {parameter} has been updated")
+
+
+@bot.command(name = "update.entry.image")
+async def update_entry_image(ctx, entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    if entry in encyclopedia:
+        for attach in ctx.message.attachments:
+            await attach.save(f"encyclopedia_images/{attach.filename}")
+            im = Image.open(f"encyclopedia_images/{attach.filename}")
+            im.save(f"encyclopedia_images/{entry}.png") 
+            os.remove(f"encyclopedia_images/{attach.filename}")
+            
+    await ctx.send(f"{entry}'s reference image updated")
+
+
+@bot.command(name = "entry.image.add")
+async def entry_image_add(ctx, entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    if entry in encyclopedia:
+        for attach in ctx.message.attachments:
+            await attach.save(f"encyclopedia_images/{attach.filename}")
+            im = Image.open(f"encyclopedia_images/{attach.filename}")
+            im.save(f"encyclopedia_images/{entry}{str(len(encyclopedia[entry]['images'])+1)}.png")
+            encyclopedia[entry]['images'].append(f"encyclopedia_images/{entry}{str(len(encyclopedia[entry]['images'])+1)}.png") 
+            os.remove(f"encyclopedia_images/{attach.filename}")
+
+    with open("encyclopedia.json", "w") as json_data:
+        json_data.write(json.dumps(encyclopedia))
+
+    await ctx.send(f"{entry} image added!")
+
+
+@bot.command(name = "entry.image.get")
+async def entry_image_get(ctx, entry, index):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    if index == "all":
+        for image in encyclopedia[entry]["images"]:
+            file = discord.File(image)
+            await ctx.send(file=file)
+    else:
+        file = discord.File(encyclopedia[entry]["images"][int(index)-1])
+        msg = await ctx.send(file=file)
+        await msg.delete()
+    
+
+@bot.command(name = "entry")
+async def entry(ctx, entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    species = (str(encyclopedia[entry]['species']))
+    threatlevel = (str(encyclopedia[entry]['threatlevel']))
+    height = (str(encyclopedia[entry]['height']))
+    maturity = (str(encyclopedia[entry]['maturity']))
+    lore = encyclopedia[entry]['lore']
+
+    if entry in encyclopedia:
+        file = discord.File(f"encyclopedia_images/{entry}.png")
+        embed = discord.Embed(title=entry, description="Monster ID", color=0x73d216)
+        embed.add_field(name="Species", value=species, inline=True)
+        embed.add_field(name="Threat Level", value=threatlevel, inline=False)
+        embed.add_field(name="Height", value=(height + "cm"), inline=False)
+        embed.add_field(name="Maturity", value=maturity, inline=False)
+        embed.add_field(name="Lore", value=lore, inline=False)
+        embed.set_image(url=f"attachment://encyclopedia_images/{entry}.png")
+        await ctx.send(file=file, embed=embed)
+    else:
+        await ctx.send("Entry not in Encyclopedia")
+
+
+
+
 
 bot.run(TOKEN)
