@@ -17,23 +17,10 @@ COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 
-if not os.path.isdir("reference_images"):
-    os.mkdir("reference_images")
-    print("reference_images directory created!")
-else:
-    print("reference_images directory exists!")
+#-------------------#
+# One-shot commands #
+# ------------------#
 
-if not os.path.isdir("images"):
-    os.mkdir("images")
-    print("images directory created!")
-else:
-    print("images directory exists!")
-
-if not os.path.isdir("encyclopedia_images"):
-    os.mkdir("encyclopedia_images")
-    print("encyclopedia_images directory created!")
-else:
-    print("encyclopedia_images directory exists!")
 
 @bot.event
 async def on_ready():
@@ -74,6 +61,11 @@ async def i_love_you(ctx): #Tells the message author that they are loved
     
     response = f"Mmm~ I love you too {author}"
     await ctx.send(response)
+
+
+#----------------------------#
+# Message Database Functions #
+# ---------------------------#
 
 @bot.command(name = 'mbuild')
 async def build_message_list(ctx):
