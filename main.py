@@ -193,6 +193,9 @@ async def update_reference_image(ctx, name):
     if name in references:
         for attach in ctx.message.attachments:
             references[name]['referenceimage'] = (str(attach.url))
+    
+    with open("references.json", "w") as json_data:
+        json_data.write(json.dumps(references))
             
     await ctx.send(f"{name}'s reference image updated")
 
