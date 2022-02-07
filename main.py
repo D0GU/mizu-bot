@@ -160,6 +160,26 @@ async def create_reference(ctx, name):
             fileout.write(json.dumps(references))
         await ctx.send(f"Reference for character {name} has been created")
 
+@bot.command(name = "update.reference.name")
+async def create_reference(ctx, name, new_name):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    if name in references:
+        references[new_name] = references[name] 
+    else:
+        await ctx.send(f"No entry with name {name}")
+        return
+
+    
+    with open("references.json", "w") as fileout:
+        fileout.write(json.dumps(references))
+    await ctx.send(f"name for {new_name} has been updated")
+
 
 @bot.command(name = "update.reference")
 async def update_reference(ctx, name, parameter: str, content):
@@ -317,6 +337,25 @@ async def create_entry(ctx, entry):
         with open("encyclopedia.json", "w") as fileout:
             fileout.write(json.dumps(encyclopedia))
         await ctx.send(f"Entry for {entry} has been created")
+
+@bot.command(name = "update.entry.name")
+async def create_entry(ctx, entry, new_entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    if entry in encyclopedia:
+        encyclopedia[new_entry] = encyclopedia[entry]
+    else:
+        await ctx.send(await ctx.send(f"No entry with ID {entry}"))
+
+
+        with open("encyclopedia.json", "w") as fileout:
+            fileout.write(json.dumps(encyclopedia))
+        await ctx.send(f"Id for {new_entry} has been updated")
 
 
 @bot.command(name = "update.entry")
