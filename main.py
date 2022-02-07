@@ -323,9 +323,9 @@ async def entry_list(ctx):
 
     
 
-    embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
+    embed = discord.Embed(title="Monster Encyclopedia 1", description="Listing", color=0x73d216)
     i = 0
-    listnum = 0
+    listnum = 1
     for entry in encyclopedia:
         if i < 25:  
             embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=True)
