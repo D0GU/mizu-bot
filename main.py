@@ -7,8 +7,6 @@ from discord.ext import commands
 import shutil
 import random
 
-from soupsieve import match
-
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)
