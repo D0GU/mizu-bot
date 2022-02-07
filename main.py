@@ -247,8 +247,8 @@ async def image_get(ctx, name, index):
             await ctx.send(entry)
     else:
         image = references[name]["images"][int(index)-1]
-        msg = ctx.message
-        await msg.delete()
+        await ctx.message.delete()
+        await ctx.send(image)
     
 
 @bot.command(name = "reference")
@@ -413,8 +413,8 @@ async def entry_image_get(ctx, entry, index):
             await ctx.send(image)
     else:
         image = encyclopedia[entry]["images"][int(index)-1]
-        msg = ctx.message
-        await msg.delete()
+        await ctx.message.delete()
+        await ctx.send(image)
     
 
 @bot.command(name = "entry")
