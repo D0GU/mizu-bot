@@ -349,7 +349,7 @@ async def update_entry(ctx, entry, parameter: str, content):
 
 
 @bot.command(name = "update.entry.all")
-async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, maturity, lore):
+async def update_entry_all(ctx, entry, species, threatlevel, height, maturity, lore):
     encyclopedia = {}
     try:
         with open("encyclopedia.json", "r") as json_data:
@@ -357,7 +357,7 @@ async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, 
     except:
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
     
-        encyclopedia[entry]["monsterid"] = monsterid
+        encyclopedia[entry]["monsterid"] = entry    
         encyclopedia[entry]["species"] = species
         encyclopedia[entry]["threatlevel"] = threatlevel
         encyclopedia[entry]["height"] = height
