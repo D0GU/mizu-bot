@@ -139,6 +139,38 @@ async def i_love_you(ctx): #Tells the message author that they are loved
     response = random.choice(responses["love"])
     await ctx.send(response.format(author))
 
+@bot.command(name='hug')
+async def hug(ctx): #Tells the message author that they are loved
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    # Takes the username minus id number of the message author
+    author = str(ctx.message.author.display_name).split("#")[0] 
+    
+    #response = f"Mmm~ I love you too {author}"
+    response = random.choice(responses["hug"])
+    await ctx.send(response.format(author))
+
+@bot.command(name='kiss')
+async def kiss(ctx): #Tells the message author that they are loved
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    # Takes the username minus id number of the message author
+    author = str(ctx.message.author.display_name).split("#")[0] 
+    
+    #response = f"Mmm~ I love you too {author}"
+    response = random.choice(responses["kiss"])
+    await ctx.send(response.format(author))
+
 
 #----------------------------#
 # Message Database Functions #
