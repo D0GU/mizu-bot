@@ -247,7 +247,7 @@ async def image_get(ctx, name, index):
             await ctx.send(entry)
     else:
         image = references[name]["images"][int(index)-1]
-        msg = await ctx.send(image)
+        msg = ctx.message
         await msg.delete()
     
 
@@ -358,7 +358,7 @@ async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, 
     with open("encyclopedia.json", "w") as json_data:
         json_data.write(json.dumps(encyclopedia))
 
-    await ctx.send(f"{entry}'s {parameter} has been updated")
+    await ctx.send(f"{entry}'s everything has been updated")
 
 
 @bot.command(name = "update.entry.image")
@@ -413,7 +413,7 @@ async def entry_image_get(ctx, entry, index):
             await ctx.send(image)
     else:
         image = encyclopedia[entry]["images"][int(index)-1]
-        msg = await ctx.send(image)
+        msg = ctx.message
         await msg.delete()
     
 
