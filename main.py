@@ -325,7 +325,7 @@ async def entry_list(ctx):
     embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
 
     for entry in encyclopedia:  
-        embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=False)
+        embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=True)
         
     await ctx.send(embed=embed)
     
