@@ -371,9 +371,9 @@ async def create_entry(ctx, entry, new_entry):
         await ctx.send(await ctx.send(f"No entry with ID {entry}"))
 
 
-        with open("encyclopedia.json", "w") as fileout:
-            fileout.write(json.dumps(encyclopedia))
-        await ctx.send(f"Id for {new_entry} has been updated")
+    with open("encyclopedia.json", "w") as fileout:
+        fileout.write(json.dumps(encyclopedia))
+    await ctx.send(f"Id for {new_entry} has been updated")
 
 
 @bot.command(name = "update.entry")
