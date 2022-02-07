@@ -37,7 +37,7 @@ if os.path.exists("encyclopedia.json") == False:
 
 if os.path.exists("responses.json") == False:
     with open("responses.json", "w") as json_file3:
-        json_file2.write('{"love":[],"hug":[],"kiss":[]}')
+        json_file3.write('{"love":[],"hug":[],"kiss":[]}')
     
 
 
