@@ -104,12 +104,12 @@ async def create_reference(ctx, type, content):
         await ctx.send("reference file could not be opened, contact D0GU#5777")
 
     if type in types:
+        if type == types[0]:
+            if content not in responses[types[0]]:
+                responses[types[0]].append(content)
         if type == types[1]:
             if content not in responses[types[1]]:
                 responses[types[1]].append(content)
-        if type == types[2]:
-            if content not in responses[types[2]]:
-                responses[types[2]].append(content)
         if type == types[2]:
             if content not in responses[types[2]]:
                 responses[types[2]].append(content)
