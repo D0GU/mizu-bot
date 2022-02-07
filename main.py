@@ -113,13 +113,14 @@ async def create_reference(ctx, type, content):
         if type == types[2]:
             if content not in responses[types[2]]:
                 responses[types[2]].append(content)
-        else:
-            await ctx.send("Wrong type argument")
+        
+            
     
         with open("responses.json", "w") as fileout:
             fileout.write(json.dumps(responses))
         await ctx.send("Response Added")
-
+    else:
+        await ctx.send("Wrong type argument")
 
 
 @bot.command(name='ily')
