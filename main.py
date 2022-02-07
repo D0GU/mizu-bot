@@ -6,12 +6,30 @@ import json
 from dotenv import load_dotenv, set_key, find_dotenv
 from PIL import Image
 from discord.ext import commands
+import shutil
 
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)
 TOKEN = os.getenv('DISCORD_TOKEN')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+
+
+#encyclopedia and reference file backup on start
+if os.path.exists("encyclopedia.json"):
+    shutil.copy("references.json", "references.json.bak")
+if os.path.exists("encyclopedia.json"):
+    shutil.copy("encyclopedia.json", "encyclopedia.json.bak")
+
+#creates reference and encyclopedia files if they do not exist.
+if os.path.exists("encyclopedia.json") == False:
+    with open("references.json", "w") as json_file:
+        json_file.write("{}")
+
+if os.path.exists("encyclopedia.json") == False:
+    with open("references.json", "w") as json_file2:
+        json_file2.write("{}")
+    
 
 
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
