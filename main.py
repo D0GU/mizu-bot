@@ -312,6 +312,24 @@ async def reference(ctx, name):
 # ---------------------#
 
 
+@bot.command(name = "entry")
+async def entry(ctx, entry):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    
+    embed = discord.Embed(title=entry, description="Monster ID", color=0x73d216)
+
+    for entry in encyclopedia:  
+        embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=False)
+        
+    await ctx.send(embed=embed)
+    
+
 @bot.command(name = "create.entry")
 async def create_entry(ctx, entry):
     encyclopedia = {}
