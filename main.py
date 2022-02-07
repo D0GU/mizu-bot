@@ -349,7 +349,7 @@ async def update_entry(ctx, entry, parameter: str, content):
 
 
 @bot.command(name = "update.entry.all")
-async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, maturity, lore, content):
+async def update_entry_all(ctx, entry, monsterid, species, threatlevel, height, maturity, lore):
     encyclopedia = {}
     try:
         with open("encyclopedia.json", "r") as json_data:
