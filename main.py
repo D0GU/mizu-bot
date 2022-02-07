@@ -401,7 +401,7 @@ async def entry_image_add(ctx, entry):
 
     if entry in encyclopedia:
         for attach in ctx.message.attachments:
-            [encyclopedia][entry]["image"].append(str(attach.url))
+            [encyclopedia][entry]["images"].append(str(attach.url))
 
     with open("encyclopedia.json", "w") as json_data:
         json_data.write(json.dumps(encyclopedia))
