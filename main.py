@@ -357,12 +357,12 @@ async def update_entry_all(ctx, entry, species, threatlevel, height, maturity, l
     except:
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
     
-        encyclopedia[entry]["monsterid"] = entry    
-        encyclopedia[entry]["species"] = species
-        encyclopedia[entry]["threatlevel"] = threatlevel
-        encyclopedia[entry]["height"] = height
-        encyclopedia[entry]["maturity"] = maturity
-        encyclopedia[entry]["lore"] = lore
+    encyclopedia[entry]["monsterid"] = entry    
+    encyclopedia[entry]["species"] = species
+    encyclopedia[entry]["threatlevel"] = threatlevel
+    encyclopedia[entry]["height"] = height
+    encyclopedia[entry]["maturity"] = maturity
+    encyclopedia[entry]["lore"] = lore
 
 
     with open("encyclopedia.json", "w") as json_data:
