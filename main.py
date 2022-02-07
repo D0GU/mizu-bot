@@ -364,6 +364,8 @@ async def update_entry_all(ctx, entry, species, threatlevel, height, maturity, l
     encyclopedia[entry]["maturity"] = maturity
     encyclopedia[entry]["lore"] = lore
 
+    for attach in ctx.message.attachments:
+            encyclopedia[entry]['referenceimage'] = str(attach.url)
 
     with open("encyclopedia.json", "w") as json_data:
         json_data.write(json.dumps(encyclopedia))
