@@ -322,11 +322,18 @@ async def entry_list(ctx):
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
 
     
-    embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
 
-    for entry in encyclopedia:  
-        embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=True)
-        
+    embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
+    i = 0
+    for entry in encyclopedia:
+        if i < 25:  
+            embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=True)
+            i+=1
+        else:
+            await ctx.send(embed=embed)
+            embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
+            i = 0
+
     await ctx.send(embed=embed)
     
 
