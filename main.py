@@ -312,8 +312,8 @@ async def reference(ctx, name):
 # ---------------------#
 
 
-@bot.command(name = "entry")
-async def entry(ctx, entry):
+@bot.command(name = "entry.list")
+async def entry_list(ctx, entry):
     encyclopedia = {}
     try:
         with open("encyclopedia.json", "r") as json_data:
