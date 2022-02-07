@@ -1,5 +1,5 @@
 
-from ast import Str
+from ast import Str, match_case
 import discord
 import os
 import json
@@ -7,6 +7,9 @@ from dotenv import load_dotenv, set_key, find_dotenv
 from PIL import Image
 from discord.ext import commands
 import shutil
+import random
+
+from soupsieve import match
 
 
 dotenv_file = find_dotenv()
@@ -20,6 +23,8 @@ if os.path.exists("encyclopedia.json"):
     shutil.copy("references.json", "references.json.bak")
 if os.path.exists("encyclopedia.json"):
     shutil.copy("encyclopedia.json", "encyclopedia.json.bak")
+if os.path.exists("responses.json"):
+    shutil.copy("responses.json", "responses.json.bak")
 
 #creates reference and encyclopedia files if they do not exist.
 if os.path.exists("encyclopedia.json") == False:
@@ -29,6 +34,14 @@ if os.path.exists("encyclopedia.json") == False:
 if os.path.exists("encyclopedia.json") == False:
     with open("references.json", "w") as json_file2:
         json_file2.write("{}")
+
+if os.path.exists("encyclopedia.json") == False:
+    with open("references.json", "w") as json_file:
+        json_file.write("{}")
+
+if os.path.exists("responses.json") == False:
+    with open("responses.json", "w") as json_file3:
+        json_file2.write('{"love":[],"hug":[],"kiss":[]}')
     
 
 
@@ -80,15 +93,54 @@ async def newprefix(ctx, new_prefix): #Changes the command prefix
     await ctx.send("New prefix set!")
     os.system("sh restart.sh")
 
+#-------------------#
+# Response commands #
+# ------------------#
+
+@bot.command(name = "response.add")
+async def create_reference(ctx, type, content):
+    types = ["love","hug","kiss"]    
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    if type in types:
+        if type == types[1]:
+            if content not in responses[types[1]]:
+                responses[types[1]].append(content)
+        if type == types[2]:
+            if content not in responses[types[2]]:
+                responses[types[2]].append(content)
+        if type == types[2]:
+            if content not in responses[types[2]]:
+                responses[types[2]].append(content)
+        else:
+            await ctx.send("Wrong type argument")
+    
+        with open("responses.json", "w") as fileout:
+            fileout.write(json.dumps(responses))
+        await ctx.send("Response Added")
+
+
 
 @bot.command(name='ily')
 async def i_love_you(ctx): #Tells the message author that they are loved
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
 
     # Takes the username minus id number of the message author
     author = str(ctx.message.author.display_name).split("#")[0] 
     
-    response = f"Mmm~ I love you too {author}"
-    await ctx.send(response)
+    #response = f"Mmm~ I love you too {author}"
+    response = random.choice(responses["love"])
+    await ctx.send(response.format(author))
 
 
 #----------------------------#
