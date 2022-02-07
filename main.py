@@ -322,7 +322,7 @@ async def entry_list(ctx):
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
 
     
-    embed = discord.Embed(title=entry, description="Monster ID", color=0x73d216)
+    embed = discord.Embed(title="Monster Encyclopedia", description="Listing", color=0x73d216)
 
     for entry in encyclopedia:  
         embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=False)
