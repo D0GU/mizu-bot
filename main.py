@@ -1,3 +1,5 @@
+# D0GU#5777
+
 import discord
 import os
 import json
