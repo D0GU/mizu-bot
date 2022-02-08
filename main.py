@@ -17,7 +17,7 @@ COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 
 
 #encyclopedia and reference file backup on start
-if os.path.exists("encyclopedia.json"):
+if os.path.exists("references.json"):
     shutil.copy("references.json", "references.json.bak")
 if os.path.exists("encyclopedia.json"):
     shutil.copy("encyclopedia.json", "encyclopedia.json.bak")
