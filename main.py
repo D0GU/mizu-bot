@@ -26,11 +26,7 @@ if os.path.exists("responses.json"):
 
 #creates reference and encyclopedia files if they do not exist.
 if os.path.exists("encyclopedia.json") == False:
-    with open("references.json", "w") as json_file:
-        json_file.write("{}")
-
-if os.path.exists("encyclopedia.json") == False:
-    with open("references.json", "w") as json_file2:
+    with open("encyclopedia.json", "w") as json_file2:
         json_file2.write("{}")
 
 if os.path.exists("encyclopedia.json") == False:
