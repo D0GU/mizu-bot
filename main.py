@@ -9,12 +9,13 @@ from discord.ext import commands
 import shutil
 import random
 
-
+# Config loading
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)
 TOKEN = os.getenv('DISCORD_TOKEN')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 
+bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 #encyclopedia and reference file backup on start
 if os.path.exists("references.json"):
@@ -35,12 +36,8 @@ if os.path.exists("encyclopedia.json") == False:
 
 if os.path.exists("responses.json") == False:
     with open("responses.json", "w") as json_file3:
-        json_file3.write('{"love":[],"hug":[],"kiss":[]}')
+        json_file3.write('{"love":[],"hug":[],"kiss":[],"morning":[],"night":[]}')
     
-
-
-bot = commands.Bot(command_prefix=COMMAND_PREFIX)
-
 
 #-------------------#
 # One-shot commands #
@@ -60,7 +57,7 @@ async def on_member_join(member):
     )
 
 @bot.command(name='commands')
-async def command_help(ctx):
+async def command_help(ctx):  # Command list
     embed=discord.Embed(title="Command List", description="Available Commands", color=0xfce94f)
     embed.add_field(name="~commands", value="Shows this help menu.", inline=False)
     embed.add_field(name="~mbuild", value="Builds message database for the current server.", inline=False)
@@ -93,7 +90,7 @@ async def newprefix(ctx, new_prefix): #Changes the command prefix
 
 @bot.command(name = "response.add")
 async def create_reference(ctx, type, content):
-    types = ["love","hug","kiss"]    
+    types = ["love","hug","kiss","morning","night"]    
     responses = {}
     try:
         with open("responses.json", "r") as json_data:
@@ -111,6 +108,12 @@ async def create_reference(ctx, type, content):
         if type == types[2]:
             if content not in responses[types[2]]:
                 responses[types[2]].append(content)
+        if type == types[3]:
+            if content not in responses[types[3]]:
+                responses[types[3]].append(content)
+        if type == types[4]:
+            if content not in responses[types[4]]:
+                responses[types[4]].append(content)
         
             
     
@@ -133,12 +136,11 @@ async def i_love_you(ctx): #Tells the message author that they are loved
     # Takes the username minus id number of the message author
     author = str(ctx.message.author.display_name).split("#")[0] 
     
-    #response = f"Mmm~ I love you too {author}"
     response = random.choice(responses["love"])
     await ctx.send(response.format(author))
 
 @bot.command(name='hug')
-async def hug(ctx): #Tells the message author that they are loved
+async def hug(ctx): #Hugs Mizu
     responses = {}
     try:
         with open("responses.json", "r") as json_data:
@@ -149,12 +151,41 @@ async def hug(ctx): #Tells the message author that they are loved
     # Takes the username minus id number of the message author
     author = str(ctx.message.author.display_name).split("#")[0] 
     
-    #response = f"Mmm~ I love you too {author}"
     response = random.choice(responses["hug"])
     await ctx.send(response.format(author))
 
 @bot.command(name='kiss')
-async def kiss(ctx): #Tells the message author that they are loved
+async def kiss(ctx): #Kisses Mizu
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    # Takes the username minus id number of the message author
+    author = str(ctx.message.author.display_name).split("#")[0] 
+
+    response = random.choice(responses["kiss"])
+    await ctx.send(response.format(author))
+
+@bot.command(name='morning')
+async def morning(ctx): #Says good morning to Mizu
+    responses = {}
+    try:
+        with open("responses.json", "r") as json_data:
+                responses = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    # Takes the username minus id number of the message author
+    author = str(ctx.message.author.display_name).split("#")[0] 
+    
+    response = random.choice(responses["morning"])
+    await ctx.send(response.format(author))
+
+@bot.command(name='night')
+async def night(ctx): #Says goodnight to Mizu
     responses = {}
     try:
         with open("responses.json", "r") as json_data:
@@ -166,7 +197,7 @@ async def kiss(ctx): #Tells the message author that they are loved
     author = str(ctx.message.author.display_name).split("#")[0] 
     
     #response = f"Mmm~ I love you too {author}"
-    response = random.choice(responses["kiss"])
+    response = random.choice(responses["night"])
     await ctx.send(response.format(author))
 
 
