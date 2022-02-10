@@ -137,7 +137,7 @@ async def i_love_you(ctx): #Tells the message author that they are loved
     author = str(ctx.message.author.display_name).split("#")[0] 
     
     response = random.choice(responses["love"])
-    await ctx.send(response.format(author))
+    await ctx.send(response.format(*author))
 
 @bot.command(name='hug')
 async def hug(ctx): #Hugs Mizu
@@ -152,7 +152,7 @@ async def hug(ctx): #Hugs Mizu
     author = str(ctx.message.author.display_name).split("#")[0] 
     
     response = random.choice(responses["hug"])
-    await ctx.send(response.format(author))
+    await ctx.send(response.format(*author))
 
 @bot.command(name='kiss')
 async def kiss(ctx): #Kisses Mizu
@@ -167,7 +167,7 @@ async def kiss(ctx): #Kisses Mizu
     author = str(ctx.message.author.display_name).split("#")[0] 
 
     response = random.choice(responses["kiss"])
-    await ctx.send(response.format(author))
+    await ctx.send(response.format(*author))
 
 @bot.command(name='morning')
 async def morning(ctx): #Says good morning to Mizu
@@ -182,7 +182,7 @@ async def morning(ctx): #Says good morning to Mizu
     author = str(ctx.message.author.display_name).split("#")[0] 
     
     response = random.choice(responses["morning"])
-    await ctx.send(response.format(author))
+    await ctx.send(response.format(*author))
 
 @bot.command(name='night')
 async def night(ctx): #Says goodnight to Mizu
@@ -198,7 +198,7 @@ async def night(ctx): #Says goodnight to Mizu
     
     #response = f"Mmm~ I love you too {author}"
     response = random.choice(responses["night"])
-    await ctx.send(response.format(author))
+    await ctx.send(response.format(*author))
 
 
 #----------------------------#
