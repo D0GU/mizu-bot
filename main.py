@@ -92,7 +92,7 @@ async def log(ctx,threat): #randomly generates threat level and log number for e
     if threat in h or l:
         if threat.lower() in l:
             await ctx.send(f"Threat level: {random.randint(0,50)}\nLog number: {random.randint(1000,2000)}")
-        elif threat.lower() in l:
+        elif threat.lower() in h:
             await ctx.send(f"Threat level: {random.randint(50,100)}\nLog number: {random.randint(1000,2000)}")
     else:
         await ctx.send("Please enter a proper threat level (high/low)")
