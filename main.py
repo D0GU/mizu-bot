@@ -84,6 +84,21 @@ async def newprefix(ctx, new_prefix): #Changes the command prefix
     await ctx.send("New prefix set!")
     os.system("sh restart.sh")
 
+
+@bot.command(name='log')
+async def log(ctx,threat): #randomly generates threat level and log number for entry creation
+    h = ["l","lower","low"]
+    l = ["h","higher","high"]
+    if threat in h or l:
+        if threat.lower() in l:
+            await ctx.send(f"Threat level: {random.randint(0,50)}\nLog number: {random.randint(1000,2000)}")
+        elif threat.lower() in l:
+            await ctx.send(f"Threat level: {random.randint(50,100)}\nLog number: {random.randint(1000,2000)}")
+    else:
+        await ctx.send("Please enter a proper threat level (high/low)")
+        
+        
+        
 #-------------------#
 # Response commands #
 # ------------------#
