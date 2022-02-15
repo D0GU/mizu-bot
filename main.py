@@ -344,6 +344,9 @@ async def update_reference_all(ctx, name, age, height, desc):
     references[name]["height"] = height
     references[name]["description"] = desc
 
+    for attach in ctx.message.attachments:
+        references[name]['referenceimage'] = str(attach.url)
+
     with open("references.json", "w") as json_data:
         json_data.write(json.dumps(references))
 
