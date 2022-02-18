@@ -425,6 +425,26 @@ async def image_get(ctx, name, index):
         image = references[name]["images"][int(index)-1]
         await ctx.message.delete()
         await ctx.send(image)
+
+@bot.command(name = "image.remove")
+async def image_add(ctx, name, index):
+    references = {}
+    try:
+        with open("references.json", "r") as json_data:
+                references = json.load(json_data)
+    except:
+        await ctx.send("reference file could not be opened, contact D0GU#5777")
+
+    try:
+        references[name]["images"].pop(index)
+    except:
+        await ctx.send("Index does not exist")
+            
+
+    with open("references.json", "w") as json_data:
+        json_data.write(json.dumps(references))
+
+    await ctx.send(f"{name} image removed")
     
 
 @bot.command(name = "reference")
@@ -639,6 +659,25 @@ async def entry_image_get(ctx, entry, index):
         image = encyclopedia[entry]["images"][int(index)-1]
         await ctx.message.delete()
         await ctx.send(image)
+
+@bot.command(name = "entry.image.add")
+async def entry_image_add(ctx, entry, index):
+    encyclopedia = {}
+    try:
+        with open("encyclopedia.json", "r") as json_data:
+                encyclopedia = json.load(json_data)
+    except:
+        await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
+
+    try:
+        encyclopedia[entry]["images"]
+    except:
+        await ctx.send("Index does not exist")
+
+    with open("encyclopedia.json", "w") as json_data:
+        json_data.write(json.dumps(encyclopedia))
+
+    await ctx.send(f"{entry} image removed!")
     
 
 @bot.command(name = "entry")
