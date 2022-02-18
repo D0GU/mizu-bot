@@ -672,14 +672,15 @@ async def entry_image_remove(ctx, entry, index):
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
 
     try:
-        encyclopedia[entry]["images"].pop(index-1)
+        encyclopedia[entry]["images"].pop(int(index)-1)
+        with open("encyclopedia.json", "w") as json_data:
+            json_data.write(json.dumps(encyclopedia))
+
+        await ctx.send(f"{entry} image removed!")
     except:
         await ctx.send("Index does not exist")
 
-    with open("encyclopedia.json", "w") as json_data:
-        json_data.write(json.dumps(encyclopedia))
-
-    await ctx.send(f"{entry} image removed!")
+    
     
 
 @bot.command(name = "entry")
