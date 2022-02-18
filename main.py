@@ -660,8 +660,8 @@ async def entry_image_get(ctx, entry, index):
         await ctx.message.delete()
         await ctx.send(image)
 
-@bot.command(name = "entry.image.add")
-async def entry_image_add(ctx, entry, index):
+@bot.command(name = "entry.image.remove")
+async def entry_image_remove(ctx, entry, index):
     encyclopedia = {}
     try:
         with open("encyclopedia.json", "r") as json_data:
