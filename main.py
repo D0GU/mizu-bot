@@ -436,15 +436,17 @@ async def image_add(ctx, name, index):
         await ctx.send("reference file could not be opened, contact D0GU#5777")
 
     try:
-        references[name]["images"].pop(index-1)
+        references[name]["images"].pop(int(index)-1)
+        
+        with open("references.json", "w") as json_data:
+            json_data.write(json.dumps(references))
+
+        await ctx.send(f"{name} image removed")
     except:
         await ctx.send("Index does not exist")
             
 
-    with open("references.json", "w") as json_data:
-        json_data.write(json.dumps(references))
-
-    await ctx.send(f"{name} image removed")
+    
     
 
 @bot.command(name = "reference")
