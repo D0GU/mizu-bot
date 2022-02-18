@@ -436,7 +436,7 @@ async def image_add(ctx, name, index):
         await ctx.send("reference file could not be opened, contact D0GU#5777")
 
     try:
-        references[name]["images"].pop(index)
+        references[name]["images"].pop(index-1)
     except:
         await ctx.send("Index does not exist")
             
@@ -670,7 +670,7 @@ async def entry_image_remove(ctx, entry, index):
         await ctx.send("encyclopedia file could not be opened, contact D0GU#5777")
 
     try:
-        encyclopedia[entry]["images"]
+        encyclopedia[entry]["images"].pop(index-1)
     except:
         await ctx.send("Index does not exist")
 
