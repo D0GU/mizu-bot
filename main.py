@@ -495,6 +495,7 @@ async def entry_list(ctx):
     i = 0
     listnum = 1
     for entry in encyclopedia:
+        print(entry)
         if i < 25:  
             embed.add_field(name=entry, value=encyclopedia[entry]['species'] , inline=True)
             i+=1
