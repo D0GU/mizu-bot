@@ -87,8 +87,8 @@ async def newprefix(ctx, new_prefix): #Changes the command prefix
 
 @bot.command(name='log')
 async def log(ctx,threat): #randomly generates threat level and log number for entry creation
-    h = ["l","lower","low"]
-    l = ["h","higher","high"]
+    l = ["l","lower","low"]
+    h = ["h","higher","high"]
     if threat in h or l:
         if threat.lower() in l:
             await ctx.send(f"Threat level: {random.randint(0,50)}\nLog number: {random.randint(1000,2000)}")
